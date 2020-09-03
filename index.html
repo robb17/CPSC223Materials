@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0074)  -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="generator" content="pandoc">
+  <title>CPSC 223 and the Zoo</title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">CPSC 223 and the Zoo</h1>
+</div>
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#note-on-formatting">Note on formatting</a></li>
+<li><a href="#what-are-the-scpssh-commands-for-gettingsending-homework-files">What are the <code>scp</code>/<code>ssh</code> commands for getting/sending homework files?</a></li>
+<li><a href="#im-trying-to-type-my-passwordwhy-cant-i-see-it">I’m trying to type my password–why can’t I see it?</a></li>
+<li><a href="#the-authenticity-of-host-cant-be-establishedshould-i-continue">The “authenticity of host” can’t be established–should I continue?</a></li>
+<li><a href="#why-am-I-being-asked-to-use-two-factor-authentication-to-log-in-to-the-zoo">Why am I being asked to use two-factor authentication to log in to the Zoo?</a></li>
+<li><a href="#how-can-i-transfer-files-and-log-in-remotely-on-a-windows-computer">How can I transfer files and log in remotely on a Windows computer?</a></li>
+<li><a href="#how-do-i-access-the-zoo">How do I access the Zoo?</a></li>
+<li><a href=" #where-should-i-keep-my-files-on-the-zoo">Where should I keep my files on the Zoo?</a></li>
+<li><a href=" #what-is-the-terminal-and-how-does-it-work">What is the “terminal” and how does it work?</a></li>
+<li><a href=" #im-trying-to-submit-but-im-having-trouble">I’m trying to submit, but I’m having trouble</a></li>
+<li><a href=" #how-can-i-use-the-zoo-from-my-own-laptop">How can I use the Zoo from my own laptop?</a></li>
+<li><a href=" #how-do-i-create-delete-move-or-rename-a-file">How do I create, delete, move, or rename a file?</a></li>
+<li><a href=" #i-can-move-files-around-but-how-do-i-edit-them-within-the-terminal">I can move files around, but how do I edit them within the terminal?</a></li>
+<li><a href=" #how-do-i-run-the-autograde-program">How do I run the <code>autograde</code> program?</a></li>
+<li><a href=" #my-code-is-correct-but-i-dont-pass-any-tests">My code is correct but I don’t pass any tests!</a></li>
+</ul>
+</div>
+<p><em>
+<script language="JavaScript">
+document.write("Last modified: " + document.lastModified)
+</script></em></p>
+
+<h2 id="introduction">Introduction</h2>
+<p>This guide is based on the most frequent problems that students encountered last semester while attempting to submit their work. To get your local machine ready for the semester, please see <a href="https://docs.google.com/document/d/1m_IWleu7XgW-JVmxt6zbzJZuSJx0CItdvbou1E1mcyg/edit?usp=sharing">this guide</a>. Note that if you want to use VS Code and SSH - Remote, you won't have to worry about constantly <code>scp</code>-ing your homework files to/from the Zoo and your local machine.</p>
+
+<p>If you are following the steps in a particular solution and it’s not working or you don’t understand it, please email a member of the instructional team or come to help hours as soon as possible! The skills that make you fast and efficient on your own computer do not necessarily translate into the command-line world of UNIX. So don’t worry if you find yourself frustrated in the early going – it doesn’t reflect on your ability to learn computer science!</p>
+<h2 id="note-on-formatting">Note on formatting</h2>
+<p>To set them apart typographically, and to allow code-snippet formatting in Markdown, I will “quote” the following items inside back-ticks.</p>
+<ul>
+<li>keys such as <code>Enter</code>, <code>j</code>, <code>~</code>, and <code>Ctrl</code></li>
+<li>file paths such as <code>/c/cs223/bin/submit</code></li>
+<li>programs such as <code>cd</code>,  <code>ls</code>, and <code>grep</code></li>
+<li>multipart commands such as <code>grep -i peanut_butter jelly.c</code></li>
+</ul>
+<p>To follow along with a command, type it into your terminal exactly (making sure your file paths are correct with respect to your CWD, or “current working directory”) and without any leading whitespace. To run the command, press <code>Enter</code>.</p>
+<p>The angle brackets <code>&lt;</code> and <code>&gt;</code> are used as placeholders for an example <code>&lt;file_name&gt;</code> or for unique identifiers. Your <code>&lt;NetID&gt;</code> is necessarily different from mine, but the paths to our respective user-spaces on the Zoo have the same structure: <code>/home/accts/&lt;NetID&gt;</code>.</p>
+<h2 id="what-are-the-scpssh-commands-for-gettingsending-homework-files">What are the <code>scp</code>/<code>ssh</code> commands for getting/sending homework files?</h2>
+<p>The <code>scp</code> syntax is:</p>
+<p><code>scp &lt;file_you_want_to_send_or_receive&gt; &lt;destination&gt;</code></p>
+<p><em>Zoo –&gt; Me</em>. One-liner for getting some file from your home folder on the Zoo onto your own computer. This also assumes you are currently in the local directory to which you want to transfer the file (i.e.&nbsp;you’re fine with the Zoo file ending up in your CWD, denoted by <code>./</code>).</p>
+<p><code>scp &lt;NetID&gt;@node.zoo.cs.yale.edu:~/&lt;filename&gt; ./</code></p>
+<!-- commented out for spring 2020
+<p>Note that the homeworks will always be available via a browser at:</p>
+<blockquote>
+<p><a href="https://zoo.cs.yale.edu/classes/cs223/Fall_2239/assignments.html" class="uri">https://zoo.cs.yale.edu/classes/cs223/Fall_2239/assignments.html</a></p>
+</blockquote>
+-->
+<p><em>Me –&gt; Zoo</em>. Send a file that exists in your CWD from your computer to your userspace on the Zoo. Make sure the target directory ends in a forward slash (<code>/</code>) so that bash interprets <code>cs223</code> as a directory and not a file. Otherwise, you’ll end up sending your file but it will now be named <code>cs223</code>, which is confusing! If the <code>~/cs223</code> directory doesn’t exist, you will see an error message that <code>/cs223/</code> is not a directory. Use <code>mkdir</code> to create the <code>cs223</code> subfolder or just transfer the file to <code>~/</code>.</p>
+<p><code>scp &lt;file_name&gt; &lt;NetID&gt;@node.zoo.cs.yale.edu:~/cs223/</code></p>
+<p>Remotely log in to the Zoo cluster with:</p>
+<p><code>ssh &lt;NetID&gt;@node.zoo.cs.yale.edu</code></p>
+<h2 id="im-trying-to-type-my-passwordwhy-cant-i-see-it">I’m trying to type my password–why can’t I see it?</h2>
+<p>Bash hides your typing of passwords for security reasons. You can still type as normal and use <code>Backspace</code> if you suspect you’ve made a typo.</p>
+<h2 id="the-authenticity-of-host-cant-be-establishedshould-i-continue">The “authenticity of host” can’t be established–should I continue?</h2>
+<p>When you <code>scp</code> or <code>ssh</code> into the Zoo, if it’s your first time doing so from a particular computer, you will see the message:</p>
+<pre><code>The authenticity of host 'node.zoo.cs.yale.edu (128.36.232.19)' can't be
+    established.
+ED25519 key fingerprint is 0f:28:c3:7d:10:de:2f:fa:3b:ec:93:7b:09:b5:04:d7.
+Are you sure you want to continue connecting (yes/no)?</code></pre>
+<p>Short answer: type “yes” or “y” and press <code>Enter</code>. This is just a boilerplate warning you don’t need to worry about.</p>
+<p>Long answer: bash will “remember” the Zoo cluster by adding its hostname and IP address to the file <code>~/.ssh/known_hosts</code>. The fingerprint has to do with the cryptographic protocol that makes “secure shell” communication possible. See:</p>
+<blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Public_key_fingerprint" class="uri">https://en.wikipedia.org/wiki/Public_key_fingerprint</a></p>
+</blockquote>
+<p>To get a sense for the purpose behind the hostname “node.zoo.cs.yale.edu,” run:</p>
+<p><code>whois 128.36.232.19</code></p>
+<h2 id="why-am-I-being-asked-to-use-two-factor-authentication-to-log-in-to-the-zoo">Why am I being asked to use two-factor authentication to log in to the Zoo?</h2>
+<p>Over the summer, Yale enabled two-factor authentication for Zoo access. The idea is to increase security by verifying your identity over another channel because a password alone is not very secure (especially for ssh access).</p>
+<p>After entering your password, you will be prompted with three authentication options. Select one by typing in its corresponding number and hitting <code>enter</code>. Then, you'll need to complete the verification request using information forwarded to your mobile device. Once finished, you should be on the Zoo!</p>
+<h2 id="how-can-i-transfer-files-and-log-in-remotely-on-a-windows-computer">How can I transfer files and log in remotely on a Windows computer?</h2>
+<p>Either you have Windows 10, or you have Windows &lt;10.</p>
+<ul>
+<li>Windows 10</li>
+</ul>
+<p>You can activate and download the Linux Subsystem for Windows. This will give you a full-on Unix shell, equivalent to the terminal on the Zoo machines or a Mac. Good directions from Microsoft are here:</p>
+<blockquote>
+<p><a href="https://msdn.microsoft.com/en-us/commandline/wsl/install_guide" class="uri">https://msdn.microsoft.com/en-us/commandline/wsl/install_guide</a></p>
+</blockquote>
+<p>Once you have the “Bash on Ubuntu on Windows” shell running (and saved to your Taskbar!), you will be in your Linux-area home directory, also abbreviated <code>~</code>. <code>cd</code> over to where your stuff is actually located with:</p>
+<p><code>cd /mnt/c/&lt;Username&gt;/Documents</code></p>
+<p>Replace <code>c</code> with <code>d</code> or whatever the name of your primary drive is. The Linux subsystem creates a full Linux file tree (with a root and <code>/usr/bin</code> just like on the Zoo). But unfortunately, this “Linux area” is not accessible via the Windows file explorer. So you’ll want to keep your files where you normally store them in <code>My Documents</code>, for instance. Then when you launch the Ubuntu shell (NOT PowerShell or cmd.exe!), move to that location by <code>cd</code>-ing to the “mounted” or <code>mnt</code> directory which is the way that the Linux area makes sense of and can access the Windows drives.</p>
+<p>You can now follow along with any of the <code>scp</code> or <code>ssh</code> commands no problem!</p>
+<ul>
+<li>Windows 8, 7, or earlier</li>
+</ul>
+<p>Update to Windows 10 now! These earlier versions aren't supported anymore and will just cause trouble for you.</p>
+
+<h2 id="how-do-i-access-the-zoo">How do I access the Zoo?</h2>
+For Fall 2020 the machines in the Zoo may only be accessed remotely. The machines are located on the 3rd floor of Arthur K Watson Hall (AKW), but due to concerns about disease transmission all of the keyboards and mice have been removed.
+<p>If you enrolled in a computer science course, you always use your NetID and password to log in to a Zoo node.</p>
+
+<h2 id="where-should-i-keep-my-files-on-the-zoo">Where should I keep my files on the Zoo?</h2>
+<p>The Zoo is a cluster of computers running the Linux operating system and sharing a common filesystem. Your userspace exists at <code>/home/accts/&lt;NetID&gt;</code>. This directory (in my case <code>/home/accts/swk2</code>) is called the home directory and it has a shortcut or alias which is the tilde character, <code>~</code>. This is where you will find the <code>cs223</code> directory that was created when you registered. Putting these two facts together, we can see that <code>~/cs223</code> is a logical place to keep your homework files.</p>
+
+<h2 id="what-is-the-terminal-and-how-does-it-work">What is the “terminal” and how does it work?</h2>
+<p>An important basic command is: <code>pwd</code> (short for “print working directory”). Enter this command on the terminal and press <code>Enter</code>. You should see the absolute path of your current location in the filesystem. “Absolute” means that the path starts at the root (represented by <code>/</code>) and shows all the parent folders of your current folder. A “relative” path is defined by reference to the current working directory.</p>
+<p>If you are using the terminal and get lost, just use <code>pwd</code> to find your place.</p>
+<p>If your terminal is cluttered with a bunch of unneeded text, type <code>clear</code> to refresh it. Practice by invoking <code>pwd</code> multiple times and then <code>clear</code>-ing the display. This is a typical workflow: accumulate the output from several commands and then refresh the screen.</p>
+<p>Now try <code>cd</code>. If you enter <code>cd</code> without any arguments, you will be returned to your home folder. This is a useful default, but the true power of the command line interface (CLI) is the ability to specify arguments and options (“flags”) for commands. The typical syntax for a command is: <code>&lt;program&gt; &lt;flags&gt; &lt;argument&gt;</code>. You type these elements, each separated by a single whitespace, and then press <code>Enter</code>.</p>
+<p>The <code>cd</code> command takes an argument that is the path to a directory. Thus you already know where the command <code>cd ~</code> will bring you. Hint: it’s the same place as <code>cd</code> invoked with no arguments (but why?). Now try this:</p>
+<p><code>cd /c/cs223/bin</code></p>
+<p>To check that you’re in the right place, use <code>pwd</code>. See what we did? We gave an absolute path to <code>cd</code> as an argument and then we moved to that path within the file system.</p>
+<p>But moving around is useless without the ability to see the stuff located in our CWD. Use the <code>ls</code> command to “list” the contents of the current working directory. If you’ve been following along and have moved to <code>/c/cs223/bin</code>, you should see a bunch of scripts related to submitting and checking your homework files. <code>ls</code> and <code>cd</code> are to the CLI what the trackpad and cursor are to your laptop. Practice using them!</p>
+<p><code>ls</code> brings up two new ideas. First, it is often convenient to invoke <code>ls</code> with some additional features, or “flags”. Try running <code>ls -al</code>. This should display for you the contents of the current directory, but listed in one column with extra details. Note that <code>ls</code> can take an argument (the path to some other directory), but usually you will want to call it without an argument so that it defaults to show the contents of the current directory. The <code>-al</code> part of <code>ls -al</code> is not an argument, but rather two flags or options, each denoted by a lowercase letter (<code>a</code> for “show all” and <code>l</code> for “long format”). By convention, a hyphen precedes the flags, which are not ordered. That is to say, <code>-al</code> is the same as <code>-la</code>.</p>
+<p>Suppose you are working in <code>~/cs223</code> but want to remember the commands available in the ZSS. Putting what we know together, we could type</p>
+<p><code>ls -la /c/cs223/bin</code></p>
+<p>and get a quick printout of the various submit scripts without having to leave our working directory in user-space.</p>
+<p>The second idea flows out of what you see in the top three lines when you invoke <code>ls -al</code>. Here’s an example:</p>
+<pre><code>total 32
+drwxrwxr-x  6 swk2 swk2 4096 Jan 17 10:50 .
+drwx------ 55 swk2 swk2 4096 Jan 10 16:43 ..</code></pre>
+<p>You can ignore the first line, which has to do with the memory blocks used by the current directory. The file named <code>.</code> is a directory, as can be seen from the initial <code>d</code> in <code>drwxrwxr-x</code>. Don’t worry about this too much. In Linux everything is a file, so directories are just a special case of files. More importantly, the <code>.</code> is a special shortcut just like the tilde <code>~</code> is. The <code>.</code> is a symbolic link to the CWD. From this, we can reason that <code>cd .</code> will “move” the shell into the current directory, or, right back where we started. This doesn’t seem helpful at all! But we will see an application later on.</p>
+<p>The two periods <code>..</code> are a shortcut to the parent directory, or the folder “one level up” from where we currently are located. If you keep invoking <code>cd ..</code>, you will eventually end up where? At the root of course! If <code>cd ..</code> gives you a way to move upward, the typical way of moving “downward” is to <code>ls</code> the contents of the CWD. Are there any subfolders? If so, then you can move “down” into them by running <code>cd &lt;name_of_folder&gt;</code>.</p>
+<p>Now is a decent time to discuss two vital features of your bash shell. Using the terminal without them is like trying to speak a language without the verb “to be.”</p>
+<ul>
+<li>History</li>
+</ul>
+<p>Hit the <code>up-arrow</code> key to access prior commands, which will be displayed next to the prompt, ready for you to run them. This is handy for recalling long commands that would be a pain to re-type! The commands are stored in “stack” order such that the immediately previous command is the first accessed via <code>up-arrow</code>. To see how many of your commands bash will remember, run</p>
+<p><code>echo $HISTSIZE</code></p>
+<ul>
+<li>Completion</li>
+</ul>
+<p>Bash will <em>autocomplete</em> resource names once it has enough characters to disambiguate them. Huh? Let’s say we’re in <code>~</code>. We want to <code>cd</code> into the <code>cs223</code> folder. Type <code>cd cs2</code> and then hit <code>TAB</code>. What happens? Play around and you should be able to figure it out. You can also use tab completion to check for the existence of files or folders. Type <code>/c/cs223/bin/un</code> and then press <code>TAB</code> <strong>twice</strong> in a row. Bash will list all the files in <code>/c/cs223/bin</code> that begin with the substring “un”. We can use this fact to check that the file we want to run as a program or specify as an argument actually exists in the location we expect it. If tab completion doesn’t find anything, we may be looking in the wrong place.</p>
+<p>At least 50% of the errors that students run into with the ZSS arise from trying to run executables such as <code>/c/cs223/bin/check</code> using the wrong path. Do NOT rely on cut-and-paste! Instead, always be mindful of your current location within the filesystem and use tab completion and <code>ls -la</code> to ensure that the folder or file you want to work with actually exists at the location you are saying it does.</p>
+
+<h2 id="im-trying-to-submit-but-im-having-trouble">I’m trying to submit, but I’m having trouble</h2>
+<p>The ONLY way to submit is using a Zoo terminal. In all likelihood, your error is that you are referring to a file that does not exist in the location you have specified.</p>
+<p>Using relative or absolute filepaths, it’s possible to submit your homework from a location other than the directory in which those files reside. But it is not a good idea for beginners. So step one is to <code>cd</code> over to the location of your homework file.</p>
+<p>Once you’re in the right location, you need to understand the difference between system-wide programs and user programs. <code>/c/cs223/bin/submit</code> is a user program. It is a piece of code written by a professor and then compiled into a binary that can then do stuff on your files and the Zoo filesystem. You might ask why we can’t just type <code>submit</code>, much in the way we type <code>man</code> to invoke the manual program. <code>man</code> and <code>ls</code> and <code>cat</code> and <code>ssh</code> are all programs that ship with Linux or can be downloaded as system packages. They live in <code>/usr/bin</code> and are in some senses privileged. When you run a command, the terminal automatically looks first in <code>/usr/bin</code> to see if there’s a match for the name of program you are trying to invoke. System-wide programs like these can conflict with user programs by having the same name.</p>
+<p>Suppose you write a script and call it <code>man</code>. Bash will run the system-wide version every time, unless you run the script not with <code>man</code> but with the path to where your “user” version exists. This is where the <code>.</code> shortcut becomes handy. Say my version of <code>man</code> is located in <code>~/cs223</code> and that’s in fact my CWD. I can run (assuming my <code>man</code> is executable) the following:</p>
+<p><code>./man</code></p>
+<p>and the shell will know that it’s my version and not the one in <code>/usr/bin</code> because I have specified that the program I want is located in the current working directory (a.k.a. <code>.</code>).</p>
+<p>You MUST give the absolute (or correct relative) filepath to <code>/c/cs223/bin/submit</code> (or <code>/c/cs223/bin/protect</code>, etc.) WHENEVER you invoke it. Use <code>ls</code> or tab completion to make sure you have specified the path correctly. The intuition is that Yale’s Zoo Submit System is specific to the Zoo cluster and is thus a resource only available to you and the rest of the CS department and not the general Linux community. So we need to tell the shell exactly where this program exists. Furthermore, we can’t misspell anything or forget whitespace between arguments since the CLI is unforgiving in a way that a Google search, say, is not.</p>
+<p>You must use this level of care and precision when referring to all files. So please go slowly. GO SLOWLY. Don’t copy-and-paste.</p>
+<p>Rant over! Here’s how we would submit a file (hello.c) and a log for grading if our CWD is the folder in which the file exists. (Note that submit can be invoked to copy multiple files over to your submission directory at once)</p>
+<p><code>/c/cs223/bin/submit &lt;asno&gt; ./hello.c ./log</code></p>
+<p>From above, we note that the program takes at least two arguments (the order of arguments DOES matter, unlike with flags). The first is the assignment number, and all subsequent are accurate paths to whichever files you'd like to submit. In this case, the homework file and our log exist in the CWD so we could also simply specify</p>
+<p><code>/c/cs223/bin/submit &lt;asno&gt; hello.c log</code></p>
+<p>You should see a message saying that your submissions were “copied” if you have done everything right and “not copied” if something went wrong. If you do not see any output, assume that the command failed. The syntax is exactly the same for the other submit scripts, which you can use to unsubmit your work or protect it or verify that you have indeed submitted file(s).</p>
+<p>This guide is NOT the manual for the ZSS; rather, it attempts to demystify why the submit programs need to be invoked in the way they do. Again, you will learn so much more (and be able to check your work) if you commit to not copying-and-pasting the commands from the existing guide.</p>
+<h2 id="how-can-i-use-the-zoo-from-my-own-laptop">How can I use the Zoo from my own laptop?</h2>
+<p>You need to learn how to send files to the Zoo from a remote machine (e.g.&nbsp;your laptop) over the internet. Remember that your code must first make it to your Zoo account before submission! <code>/c/cs223/bin/submit</code> only exists on the Zoo cluster, to refer to it on your own computer makes no sense.</p>
+
+<p>Good ways of transferring files to the Zoo</p>
+<ul>
+<li>by <code>ssh</code>/<code>scp</code> (the best and easiest way, reinforces CLI skills)</li>
+<li>by <code>ssh</code>/<code>git</code> (only if you know/like Git and are familiar with ssh keys)</li>
+</ul>
+<p>You may have tried to use some of the shell commands like <code>ls</code> and <code>cd</code> on your own computer. If you have a Mac, the program Terminal.app is accessible via “Utilities” within “Applications.” Once again, I recommend pinning the terminal to the dock for easy access. The Mac terminal works great because the Mac OS, like Linux, is based on the Unix operating system. So it follows all the same conventions and will have many of the same system-wide programs.</p>
+<p>If you are running Linux you probably don’t need to be reading this quick-start guide (!) and you will of course have a Unix-style terminal built in.</p>
+<p>If you are running Windows, then the situation is somewhat murkier. The Windows equivalent to terminal is called PowerShell. Microsoft has promised to support <code>ssh</code> in future builds, but right now, the only workaround is to use the Linux Subsystem for Windows. Since this is rather complicated, please write to the TF regarding your Windows setup or come to help hours.  The many slight and annoying differences between Windows and *nix OS’s are not worth delving into here.</p>
+<p>OK, so from here on I am assuming that you are using a *nix-based CLI. Now we can discuss what <code>ssh</code> or “secure shell” does. Pause for a moment and type <code>man ssh</code> in your terminal. It’s a bit intimidating, but it’s good practice. To scroll down in a <code>man</code> page, use the <code>j</code> key and to scroll up use <code>k</code>. To exit, hit <code>q</code> for “quit.”</p>
+<p>If <code>man ssh</code> or <code>which ssh</code> doesn’t display anything, then you don’t have the <code>ssh</code> utility on your machine and you should also email me or come to help hours.</p>
+<p><code>ssh</code> is the protocol for logging into the Zoo cluster remotely. You must be connected to the internet to do this. You should memorize the following “magic incantation”:</p>
+<p><code>ssh &lt;NetID&gt;@node.zoo.cs.yale.edu</code></p>
+<p>The <code>ssh</code> program takes an argument that is string consisting of a username “at” a particular host. For you, the username will always be your NetID and the host is ALWAYS <code>node.zoo.cs.yale.edu</code>. You can remember this because each entity is a superset of the previous one. The space of all educational institutions contains Yale, which in turn contains Yale’s CS department, which contains the Zoo, which is ultimately composed of different nodes/workstations named after animals.</p>
+<p>Easy, right? After running this command, you’ll be asked to enter your NetID password. You may be asked to type “yes” or “no” to trust/add the Zoo’s <code>ssh</code> key to your list of known hosts. Go ahead and type “yes” or “Y” and then hit <code>Enter</code>. If everything works, your shell will now turn into your shell on the Zoo. From here you will be able to use the submit scripts and the Zoo’s version of gcc/make/valgrind/gdb. You can drop back into your computer’s shell by typing <code>exit</code>.</p>
+<p>We now have a way of getting you into the Zoo, but we still need to get your files onto the Zoo. </p>
+<p>You could in theory <code>ssh</code> into the Zoo from your computer each time you wanted to work on your code. This would mean using a text editor like Emacs or Vim and doing everything from the command line since it’s not possible to use DrRacket (or any other graphical program) when <code>ssh</code>-ed in to the Zoo. A <strong>better workflow</strong> is to install the latest version of DrRacket on your computer and work locally (saving and backing up locally as you go). Then, when you have finished or reached a milestone in the assignment, you can transfer the file to the Zoo and then <code>ssh</code> into the Zoo and submit that file.</p>
+<p>The way to send a file from one host to another host securely is with <code>scp</code> or “secure copy”. <code>scp</code> is rather brittle when it comes to tab-completed file paths, so I recommend always following these steps. I will be using the file <code>dank_memes.c</code> as the example filename.</p>
+<ul>
+<li><code>cd</code> into the directory where <code>dank_memes.c</code> resides</li>
+<li>type <code>scp dank_memes.c</code> and NOT <code>./dank_memes.c</code> or <code>/abs/path/to/dank_memes.c</code> (<code>scp</code> may incorrectly try to force the name of the file to be <code>./dank_memes.c</code> in the target folder since Linux is very permissive re: what filenames are allowed)</li>
+<li>after whitespace, add the target host, which will be <code>&lt;NetID&gt;@node.zoo.cs.yale.edu:~/cs223</code></li>
+<li>press <code>Enter</code>; if all goes well, you’ll be prompted for a password and see this:</li>
+</ul>
+<pre><code>swk2@node.zoo.cs.yale.edu's password:
+dank_memes.c         100%    20KB  19.5KB/s   00:00</code></pre>
+<p>N.B. that Linux will hide your typing when you enter a password. If you’ve made a typo, you can still use <code>Backspace</code>. <b>If you don’t see the statistics about the transfer size and rate, the transfer has not succeeded</b> and you will need to try again. The full command is:</p>
+<p><code>scp dank_memes.c swk2@node.zoo.cs.yale.edu:~/cs223/</code></p>
+<p>note the subtle differences between this and <code>ssh</code>. With <code>scp</code> you ALSO need to specify the target directory on the host. This is the part after the colon in <code>user@host:target</code> (no spaces). So in my example, the target is <code>~/cs223/</code>, which is the <code>cs223</code> folder in my home directory. Only send files to your user-space on the Zoo! That is, your home folder <code>~</code> and its sub-folders.</p>
+<p>As soon as you transfer files, you should <code>ssh</code> into the Zoo and check that they have arrived as intended.</p>
+<h2 id="how-do-i-create-delete-move-or-rename-a-file">How do I create, delete, move, or rename a file?</h2>
+<p>Research the commands <code>touch</code>, <code>mkdir</code>, <code>rm</code>, and <code>mv</code>. These are essential. Often you will want to move a file from one directory to another without leaving the CLI. <code>mv</code> can do this as well as rename a file or folder.</p>
+<p><code>mv &lt;file&gt; /path/to/new/folder</code> <code>mv &lt;old_file_name&gt; &lt;new_file_name&gt;</code></p>
+<p>Be careful with <code>rm</code>, particularly when called with the flags for “recursive” and/or “force” (<code>-rf</code>). In what situations are these flags necessary? In what situations might they be very dangerous? Don’t use them without finding out!</p>
+<p>To practice with <code>mv</code> and <code>rm</code>, you can create an empty file with the <code>touch</code> command. To see how <code>touch</code> should be invoked, use <code>man</code>! You can easily delete the file with <code>rm</code>. Here are the terminal commands you should now review:</p>
+<pre><code>pwd
+ls
+cd
+man
+mv
+mkdir
+cp
+rm
+ssh
+scp
+touch
+</code></pre>
+<p>and for good measure, two new ones:</p>
+<p><code>less</code> <code>cat</code></p>
+<h2 id="i-can-move-files-around-but-how-do-i-edit-them-within-the-terminal">I can move files around, but how do I edit them within the terminal?</h2>
+<p>It's never a bad time to learn a CLI editor. I recommend Vim. But this is a matter of eternal debate :) The important thing is to test a few out. Vim should come preinstalled in the <code>/usr/bin</code> of your Mac and can thus be called with <code>vim</code> from the terminal. The Zoo machines will of course have many editors available (<code>vim</code>, <code>emacs</code>, <code>nano</code>, etc.). A quick note on Vim: the first time you open a file with this editor you will realize you have no idea how to close the program and freak out. Just remember that ":q" is your friend.</p>
+
+<h2 id="how-do-i-run-the-autograde-program">How do I run the <code>autograde</code> program?</h2>
+<p>Once the public tests are made available for an assignment, you can test your code against them in two different contexts. If you've already submitted your homework, you can test the exact files that you submitted (which reside in your submission directory) with the following:</p>
+<p><code>/c/cs223/bin/testit &lt;asno&gt; &lt;executable_name&gt;</code></p>
+<p>Note that the name of each assignment's executable will be given in the spec. For instance, for the zeroth assignment you can run the following:</p>
+<p><code>/c/cs223/bin/testit 0 Hello</code></p>
+<p>Additionally, you can test the files that reside in your CWD by running the following:</p>
+<p><code>/c/cs223/hw&lt;asno&gt;/Tests/test.&lt;executable_name&gt;</code></p>
+<p>Please keep in mind that if you invoke the above command you're running the autograder on the version of your homework that's present in your CWD. If you make a change to those files after submitting and then run the autograder with positive results, the submitted versions of your homework files are outdated and you will need to submit your homework again.</p>
+<p>You can also run individual tests on the files residing in your CWD with the following command:</p>
+<p><code>/c/cs223/hw&lt;asno&gt;/Tests/t&lt;test_number&gt;</code></p>
+<p>To get a complete list of all the <code>&lt;test_number&gt;</code>s available to you, run <code>ls -al /c/cs223/hw&lt;asno&gt;/Tests/</code>. Note that if a given test is NOT an executable (that is, it does not have a permissions signature ending in <code>x</code>––more info <a href="https://www.linux.com/training-tutorials/understanding-linux-file-permissions/">here</a>), you must use the following syntax to throw it against your code:</p>
+<p><code>./&lt;executable_name&gt; &lt; /c/cs223/hw&lt;asno&gt;/Tests/t&lt;test_number&gt;</code></p>
+<p>In this case, you might want to generate <code>&lt;executable_name&gt;</code> by invoking the third command given in this section.</p>
+<p>This class's submit system has RCS (revision control system) enabled, so feel free to submit your work often as you go! For example, if you'd like to get back the version of the file <code>dank_memes.c</code> you submitted sometime just before September 5th, 2020 at 4 pm, you could invoke the <code>retrieve</code> command as follows:</p>
+<p><code>/c/cs223/bin/retrieve &lt;asno&gt; -d"2020/09/05 16:00" dank_memes.c</code></p>
+<p>Note that, in order for this command to be executed correctly, you need to make sure that there does not exist some file named <code>dank_memes.c</code> in your CWD.</p>
+<p>Your resubmissions are automatically tagged with a version number, starting from 1.0 and growing in increments of 0.1. You can also <code>retrieve</code> a particular version of your code using the system-assigned tags:</p>
+<p><code>/c/cs223/bin/retrieve &lt;asno&gt; -n1.2 dank_memes.c</code></p>
+<p>It’s always a good idea to test your code with different inputs (and types of inputs) before submitting. Although the bulk of your grade will depend on whether your program produces the correct results when the input meets the specification, your program will be tested on inputs that do not follow the specification. For example, if the input is supposed to contain only integers, it will also be tested on inputs containing floats and strings. Unless otherwise specified, the only requirement in such cases is that your program does not crash or hang and whatever output your program produces will be ignored.</p>
+<h2 id="my-code-is-correct-but-i-dont-pass-any-tests">My code is correct but I don’t pass any tests!</h2>
+<p>Before anything else, check that you have submitted a file and that it is the correct file. Use <code>/c/cs223/bin/check</code> for the existence of a submission. This script basically just runs <code>ls -la</code> on the SUBMIT directory where your code is sent for grading.</p>
+<p>Suppose you submitted <code>dank_memes.c</code> at some point but would like to ensure that it's the most up-to-date version of the file. Instead of deleting and resubmitting, you can invoke the <code>retrieve</code> command:</p>
+<p><code>/c/cs201/bin/retrieve &lt;asno&gt; dank_memes.c</code></p>
+<p>In order for this command to be executed correctly, you need to make sure that there does not exist some file named <code>dank_memes.c</code> in your CWD. Let's assume there is, in fact, another version of that file, so let's rename it:</p>
+<p><code>mv dank_memes.c dank_memes_old.c</code></p>
+<p>And then, after running the <code>retrieve</code> command, test to see if there are any differences between the two files:</p>
+<p><code>diff dank_memes.c dank_memes_old.c</code></p>
+<p>If the <code>diff</code> command does not produce any output, you can be sure that the two files are identical. If there are differences, they should appear on your terminal window with line numbers and other helpful details.</p>
+<p>General best practices:</p>
+<ul>
+<li>save and back up your work locally</li>
+<li>take every precaution that the <code>&lt;asno&gt;</code> argument to the submit programs matches the <code>&lt;asno&gt;</code> on your homework file!</li>
+<li>if you submit <code>&lt;assignment_3_makefile&gt;</code>, for instance, with <code>/c/cs223/bin/submit 2 &lt;assignment_3_makefile&gt;</code> and Homework 2 has not been graded yet, <code>&lt;assignment_3_makefile&gt;</code> may will overwrite <code>&lt;assignment_2_makefile&gt;</code> if said file is present. This is a very serious issue, as it's almost certain that your submission for the second assignment will fail under make.</li>
+<li>when resubmitting, take no chances and first unsubmit the old version with <code>/c/cs223/bin/unsubmit</code></li>
+<li>run <code>/c/cs223/check</code> to make sure that your submitted work folder is now empty</li>
+<li>go ahead and submit the updated version of your file, checking that it has been successfully submitted</li>
+</ul>
+<p>Alternatively, your functions may be perfect, but a syntax error has made your file uninterpretable. To catch syntax errors of this kind, try running <code>make</code> on the Zoo and observing the output.</p>
+
+</body></html>
