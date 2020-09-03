@@ -44,7 +44,7 @@ document.write("Last modified: " + document.lastModified)
 <p>To set them apart typographically, and to allow code-snippet formatting in Markdown, I will “quote” the following items inside back-ticks.</p>
 <ul>
 <li>keys such as <code>Enter</code>, <code>j</code>, <code>~</code>, and <code>Ctrl</code></li>
-<li>file paths such as <code>/c/cs223/bin/submit</code></li>
+<li>file paths such as <code>/c/cs223/bin/testit</code></li>
 <li>programs such as <code>cd</code>,  <code>ls</code>, and <code>grep</code></li>
 <li>multipart commands such as <code>grep -i peanut_butter jelly.c</code></li>
 </ul>
@@ -174,17 +174,17 @@ drwx------ 55 swk2 swk2 4096 Jan 10 16:43 ..</code></pre>
 <p>Easy, right? After running this command, you’ll be asked to enter your NetID password. You may be asked to type “yes” or “no” to trust/add the Zoo’s <code>ssh</code> key to your list of known hosts. Go ahead and type “yes” or “Y” and then hit <code>Enter</code>. If everything works, your shell will now turn into your shell on the Zoo. From here you will be able to use the submit scripts and the Zoo’s version of gcc/make/valgrind/gdb. You can drop back into your computer’s shell by typing <code>exit</code>.</p>
 <p>We now have a way of getting you into the Zoo, but we still need to get your files onto the Zoo. </p>
 <p>You could in theory <code>ssh</code> into the Zoo from your computer each time you wanted to work on your code. This would mean using a text editor like Emacs or Vim and doing everything from the command line since it’s not possible to use DrRacket (or any other graphical program) when <code>ssh</code>-ed in to the Zoo. A <strong>better workflow</strong> is to install the latest version of DrRacket on your computer and work locally (saving and backing up locally as you go). Then, when you have finished or reached a milestone in the assignment, you can transfer the file to the Zoo and then <code>ssh</code> into the Zoo and submit that file.</p>
-<p>The way to send a file from one host to another host securely is with <code>scp</code> or “secure copy”. <code>scp</code> is rather brittle when it comes to tab-completed file paths, so I recommend always following these steps. I will be using the file <code>dank_memes.c</code> as the example filename.</p>
+<p>The way to send a file from one host to another host securely is with <code>scp</code> or “secure copy”. <code>scp</code> is rather brittle when it comes to tab-completed file paths, so I recommend always following these steps. I will be using the file <code>rm_rf_slash.c</code> as the example filename.</p>
 <ul>
-<li><code>cd</code> into the directory where <code>dank_memes.c</code> resides</li>
-<li>type <code>scp dank_memes.c</code> and NOT <code>./dank_memes.c</code> or <code>/abs/path/to/dank_memes.c</code> (<code>scp</code> may incorrectly try to force the name of the file to be <code>./dank_memes.c</code> in the target folder since Linux is very permissive re: what filenames are allowed)</li>
+<li><code>cd</code> into the directory where <code>rm_rf_slash.c</code> resides</li>
+<li>type <code>scp rm_rf_slash.c</code> and NOT <code>./rm_rf_slash.c</code> or <code>/abs/path/to/rm_rf_slash.c</code> (<code>scp</code> may incorrectly try to force the name of the file to be <code>./rm_rf_slash.c</code> in the target folder since Linux is very permissive re: what filenames are allowed)</li>
 <li>after whitespace, add the target host, which will be <code>&lt;NetID&gt;@node.zoo.cs.yale.edu:~/cs223</code></li>
 <li>press <code>Enter</code>; if all goes well, you’ll be prompted for a password and see this:</li>
 </ul>
 <pre><code>swk2@node.zoo.cs.yale.edu's password:
-dank_memes.c         100%    20KB  19.5KB/s   00:00</code></pre>
+rm_rf_slash.c         100%    20KB  19.5KB/s   00:00</code></pre>
 <p>N.B. that Linux will hide your typing when you enter a password. If you’ve made a typo, you can still use <code>Backspace</code>. <b>If you don’t see the statistics about the transfer size and rate, the transfer has not succeeded</b> and you will need to try again. The full command is:</p>
-<p><code>scp dank_memes.c swk2@node.zoo.cs.yale.edu:~/cs223/</code></p>
+<p><code>scp rm_rf_slash.c swk2@node.zoo.cs.yale.edu:~/cs223/</code></p>
 <p>note the subtle differences between this and <code>ssh</code>. With <code>scp</code> you ALSO need to specify the target directory on the host. This is the part after the colon in <code>user@host:target</code> (no spaces). So in my example, the target is <code>~/cs223/</code>, which is the <code>cs223</code> folder in my home directory. Only send files to your user-space on the Zoo! That is, your home folder <code>~</code> and its sub-folders.</p>
 <p>As soon as you transfer files, you should <code>ssh</code> into the Zoo and check that they have arrived as intended.</p>
 <h2 id="how-do-i-create-delete-move-or-rename-a-file">How do I create, delete, move, or rename a file?</h2>
@@ -222,20 +222,20 @@ touch
 <p>To get a complete list of all the <code>&lt;test_number&gt;</code>s available to you, run <code>ls -al /c/cs223/hw&lt;asno&gt;/Tests/</code>. Note that if a given test is NOT an executable (that is, it does not have a permissions signature ending in <code>x</code>––more info <a href="https://www.linux.com/training-tutorials/understanding-linux-file-permissions/">here</a>), you must use the following syntax to throw it against your code:</p>
 <p><code>./&lt;executable_name&gt; &lt; /c/cs223/hw&lt;asno&gt;/Tests/t&lt;test_number&gt;</code></p>
 <p>In this case, you might want to generate <code>&lt;executable_name&gt;</code> by invoking the third command given in this section.</p>
-<p>This class's submit system has RCS (revision control system) enabled, so feel free to submit your work often as you go! For example, if you'd like to get back the version of the file <code>dank_memes.c</code> you submitted sometime just before September 5th, 2020 at 4 pm, you could invoke the <code>retrieve</code> command as follows:</p>
-<p><code>/c/cs223/bin/retrieve &lt;asno&gt; -d"2020/09/05 16:00" dank_memes.c</code></p>
-<p>Note that, in order for this command to be executed correctly, you need to make sure that there does not exist some file named <code>dank_memes.c</code> in your CWD.</p>
+<p>This class's submit system has RCS (revision control system) enabled, so feel free to submit your work often as you go! For example, if you'd like to get back the version of the file <code>rm_rf_slash.c</code> you submitted sometime just before September 5th, 2020 at 4 pm, you could invoke the <code>retrieve</code> command as follows:</p>
+<p><code>/c/cs223/bin/retrieve &lt;asno&gt; -d"2020/09/05 16:00" rm_rf_slash.c</code></p>
+<p>Note that, in order for this command to be executed correctly, you need to make sure that there does not exist some file named <code>rm_rf_slash.c</code> in your CWD.</p>
 <p>Your resubmissions are automatically tagged with a version number, starting from 1.0 and growing in increments of 0.1. You can also <code>retrieve</code> a particular version of your code using the system-assigned tags:</p>
-<p><code>/c/cs223/bin/retrieve &lt;asno&gt; -n1.2 dank_memes.c</code></p>
+<p><code>/c/cs223/bin/retrieve &lt;asno&gt; -n1.2 rm_rf_slash.c</code></p>
 <p>It’s always a good idea to test your code with different inputs (and types of inputs) before submitting. Although the bulk of your grade will depend on whether your program produces the correct results when the input meets the specification, your program will be tested on inputs that do not follow the specification. For example, if the input is supposed to contain only integers, it will also be tested on inputs containing floats and strings. Unless otherwise specified, the only requirement in such cases is that your program does not crash or hang and whatever output your program produces will be ignored.</p>
 <h2 id="my-code-is-correct-but-i-dont-pass-any-tests">My code is correct but I don’t pass any tests!</h2>
 <p>Before anything else, check that you have submitted a file and that it is the correct file. Use <code>/c/cs223/bin/check</code> for the existence of a submission. This script basically just runs <code>ls -la</code> on the SUBMIT directory where your code is sent for grading.</p>
-<p>Suppose you submitted <code>dank_memes.c</code> at some point but would like to ensure that it's the most up-to-date version of the file. Instead of deleting and resubmitting, you can invoke the <code>retrieve</code> command:</p>
-<p><code>/c/cs201/bin/retrieve &lt;asno&gt; dank_memes.c</code></p>
-<p>In order for this command to be executed correctly, you need to make sure that there does not exist some file named <code>dank_memes.c</code> in your CWD. Let's assume there is, in fact, another version of that file, so let's rename it:</p>
-<p><code>mv dank_memes.c dank_memes_old.c</code></p>
+<p>Suppose you submitted <code>rm_rf_slash.c</code> at some point but would like to ensure that it's the most up-to-date version of the file. Instead of deleting and resubmitting, you can invoke the <code>retrieve</code> command:</p>
+<p><code>/c/cs201/bin/retrieve &lt;asno&gt; rm_rf_slash.c</code></p>
+<p>In order for this command to be executed correctly, you need to make sure that there does not exist some file named <code>rm_rf_slash.c</code> in your CWD. Let's assume there is, in fact, another version of that file, so let's rename it:</p>
+<p><code>mv rm_rf_slash.c rm_rf_slash_old.c</code></p>
 <p>And then, after running the <code>retrieve</code> command, test to see if there are any differences between the two files:</p>
-<p><code>diff dank_memes.c dank_memes_old.c</code></p>
+<p><code>diff rm_rf_slash.c rm_rf_slash_old.c</code></p>
 <p>If the <code>diff</code> command does not produce any output, you can be sure that the two files are identical. If there are differences, they should appear on your terminal window with line numbers and other helpful details.</p>
 <p>General best practices:</p>
 <ul>
