@@ -29,6 +29,7 @@
 <li><a href=" #i-can-move-files-around-but-how-do-i-edit-them-within-the-terminal">I can move files around, but how do I edit them within the terminal?</a></li>
 <li><a href=" #how-do-i-run-the-autograde-program">How do I run the <code>autograde</code> program?</a></li>
 <li><a href=" #my-code-is-correct-but-i-dont-pass-any-tests">My code is correct but I don’t pass any tests!</a></li>
+<li><a href=" #best-practices-for-submitting">What are best practices for submitting homework?</a></li>
 </ul>
 </div>
 <p><em>
@@ -240,12 +241,44 @@ touch
 <p>General best practices:</p>
 <ul>
 <li>save and back up your work locally</li>
-<li>take every precaution that the <code>&lt;asno&gt;</code> argument to the submit programs matches the <code>&lt;asno&gt;</code> on your homework file!</li>
-<li>if you submit <code>&lt;assignment_3_makefile&gt;</code>, for instance, with <code>/c/cs223/bin/submit 2 &lt;assignment_3_makefile&gt;</code> and Homework 2 has not been graded yet, <code>&lt;assignment_3_makefile&gt;</code> may will overwrite <code>&lt;assignment_2_makefile&gt;</code> if said file is present. This is a very serious issue, as it's almost certain that your submission for the second assignment will fail under make.</li>
+<li>if you submit <code>&lt;assignment_3_makefile&gt;</code>, for instance, with <code>/c/cs223/bin/submit 2 &lt;assignment_3_makefile&gt;</code> and Homework 2 has not been graded yet, <code>&lt;assignment_3_makefile&gt;</code> will overwrite <code>&lt;assignment_2_makefile&gt;</code> if said file is present. This is a very serious issue, as it's almost certain that your submission for the second assignment will fail under make. In this case, please see <a href=" #best-practices-for-submitting">the section below.</a></li>
 <li>when resubmitting, take no chances and first unsubmit the old version with <code>/c/cs223/bin/unsubmit</code></li>
 <li>run <code>/c/cs223/check</code> to make sure that your submitted work folder is now empty</li>
 <li>go ahead and submit the updated version of your file, checking that it has been successfully submitted</li>
 </ul>
 <p>Alternatively, your functions may be perfect, but a syntax error has made your file uninterpretable. To catch syntax errors of this kind, try running <code>make</code> on the Zoo and observing the output.</p>
 
+<h2 id="best-practices-for-submitting">What are best practices for submitting homework?</h2>
+
+<p><b>Use the <code>protect</code> command.</b> Just do it. It'll save you a lot of headache in the event that you accidentally <code>submit</code> code to the wrong submission directory. If, for example, you <code>submit</code> your <code>makefile</code> for Exercise 4 to the submission directory for Exercise 3, your prior <code>makefile</code> will be overwritten without any fanfare (as RCS is enabled). Then, when we grade Exercise 4, you will likely fail all the tests.</p>
+<p>Using <code>protect</code> prevents the overwrite and alerts you to the fact that you previously protected the file that you're attempting to overwrite:</p>
+
+<pre><code>[crb84@macaw cs223]$ /c/cs223/bin/submit 4 codes.code 
+Copying codes.code
+[crb84@macaw cs223]$ /c/cs223/bin/protect 4 codes.code
+Protecting codes.code
+[crb84@macaw cs223]$ /c/cs223/bin/submit 4 codes.code 
+submit.pl: Homework #4: codes.code is protected
+</code></pre>
+
+<p>You can always <code>unprotect</code> your submissions using the exact same syntax (but with <code>/c/cs223/bin/unprotect</code> as the executable).</p>
+
+<p><b>If you have indeed accidentally overwritten some file from a previous homework that has yet to be graded</b>, do not panic, but also do not do nothing. It is your responsibility to ensure that the contents of your submission folders accurately represent what you wish to be graded.</p>
+
+<p>Let's assume we overwrote <code>file.c</code> in <code>/c/cs223/SUBMIT/4</code>. First, we must determine which version of <code>file.c</code> existed in <code>/c/cs223/SUBMIT/4</code> when it was in its most appropriate state for that assignment. In most cases, we can assume it was the version we were hoping to <code>submit</code> at the time of its due date, so let's start there. Let's also assume that this assignment was due on October 2, 10:00 pm EST. We can use the <code>retrieve</code> command to get information about the file's version history:</p>
+
+<pre><code>[crb84@macaw cs223]$ /c/cs223/bin/retrieve 4 -d"2020/10/02 22:00" file.c
+Copying file.c
+/home/classes/cs223/SUBMIT/4/brunstad.rob.crb84/RCS/file.c,v  -->  file.c
+revision 1.1
+done
+</code></pre>
+
+<p>From what's printed to <code>stdout</code> we can deduce that version 1.1 existed in the submit directory at the time the assignment was due. (Note, however, that this command will fail if you have another copy/version of <code>file.c</code> in your CWD. If this is the case, rename the <code>file.c</code> in your CWD or simply move to another location in the system file tree.)</p>
+<p>Now, we can <code>revert</code> <code>file.c</code> to the state in which we'd like it to be graded with the following command:</p>
+<code>/c/cs223/bin/revert -r1.1 4 file.c</code>
+<p><b>If you have submitted files to a particular submission directory that do not belong in that submission directory</b>, please note that their timestamps will likely count against you, possibly triggering a lateness penalty.</p>
+<p>Please remove these files with the <code>unsubmit</code> command:</p>
+<code>/c/cs223/bin/unsubmit &lt;asno&gt; &lt;filename&gt;</code>
+<p>Once we've cleaned up the submission directory for a particular assignment, we should see only the files we want to be graded after invoking the <code>check</code> command (<code>/c/cs223/bin/check &lt;asno&gt;</code>). Note that the timestamp associated with the <code>RCS</code> directory will not induce a lateness penalty.
 </body></html>
