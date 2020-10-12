@@ -275,7 +275,7 @@ done
 
 <p>From what's printed to <code>stdout</code> we can deduce that version 1.1 existed in the submit directory at the time the assignment was due. (Note, however, that this command will fail if you have another copy/version of <code>file.c</code> in your CWD. If this is the case, rename the <code>file.c</code> in your CWD or simply move to another location in the system file tree.)</p>
 <p>Now, we can <code>revert</code> <code>file.c</code> to the state in which we'd like it to be graded with the following command:</p>
-<code>/c/cs223/bin/revert -r1.1 4 file.c</code>
+<code>/c/cs223/bin/revert 4 -r1.1 file.c</code>
 
 <p><b>If you have submitted files to a particular submission directory that do not belong in that submission directory––without performing an overwrite</b>, please note that their timestamps will likely count against you, possibly triggering a lateness penalty.</p>
 <p>Please remove these files with the <code>unsubmit</code> command:</p>
