@@ -12,6 +12,12 @@
 <h1 class="title">CPSC 223 and the Zoo</h1>
 </div>
 <div id="TOC">
+<h2 id="header-0">Quick Start</h2>
+<ul>
+<li><a href="#all-commands">All Zoo commands</a></li>
+</ul>
+
+<h2 id="header-1">General Yale CS Knowledgebase</h2>
 <ul>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#note-on-formatting">Note on formatting</a></li>
@@ -27,7 +33,11 @@
 <li><a href=" #how-can-i-use-the-zoo-from-my-own-laptop">How can I use the Zoo from my own laptop?</a></li>
 <li><a href=" #how-do-i-create-delete-move-or-rename-a-file">How do I create, delete, move, or rename a file?</a></li>
 <li><a href=" #i-can-move-files-around-but-how-do-i-edit-them-within-the-terminal">I can move files around, but how do I edit them within the terminal?</a></li>
-<li><a href=" #how-do-i-run-the-autograde-program">How do I run the <code>autograde</code> program?</a></li>
+</ul>
+<h2 id="header-3">CS223-Specific Information</h2>
+<ul>
+<li><a href=" #what-is-RCS">What is RCS?</a></li>
+<li><a href=" #how-do-i-run-the-testit-program">How do I run the <code>testit</code> program?</a></li>
 <li><a href=" #my-code-is-correct-but-i-dont-pass-any-tests">My code is correct but I don’t pass any tests!</a></li>
 <li><a href=" #best-practices-for-submitting">What are best practices for submitting homework?</a></li>
 </ul>
@@ -36,6 +46,40 @@
 <script language="JavaScript">
 document.write("Last modified: " + document.lastModified)
 </script></em></p>
+
+<h2 id="all-commands">What are all the canonical Zoo submission system commands?</h2>
+<p><b><code>submit:</code></b> copy (a) file(s) over from your CWD to the submission folder specified by <code>&lt;asno&gt;</code>. Note that multiple files can be copied at once.</p>
+<pre>
+/c/cs223/bin/submit &lt;asno&gt; &lt;file&gt;*
+</pre>
+<p><b><code>check:</code></b> see all files submitted for a particular <code>&lt;asno&gt;</code>. This script basically just runs <code>ls -la</code> on the SUBMIT directory where your code is sent for grading.</p>
+<pre>
+/c/cs223/bin/check &lt;asno&gt;
+</pre>
+<p><b><code>retrieve:</code></b> copy (a) file(s) from the submission directory specified by <code>&lt;asno&gt;</code> to your CWD. Note that a file with the same name as <code>file</code> cannot exist in your CWD. Once again, multiple files can be copied at once. This command has special flags that are enabled in this class. See the <a href=" #what-is-RCS">section below on RCS</a> for more information.</p>
+<pre>
+/c/cs223/bin/check &lt;asno&gt; &lt;file&gt;*
+</pre>
+<p><b><code>unsubmit:</code></b> delete (a) file(s) located in the submission directory specified by <code>&lt;asno&gt;</code>. Note that if the error "<code>&lt;file&gt; is protected</code>" is thrown, you simply need to <code>unprotect</code> that file. See below for more on <code>protect</code>ing.</p>
+<pre>
+/c/cs223/bin/unsubmit &lt;asno&gt; &lt;file&gt;*
+</pre>
+<p><b><code>protect:</code></b> prevent (a) file(s) located in the submission directory specified by <code>&lt;asno&gt;</code> from being discreetly overwritten. Undone by <code>unprotect</code>.</p>
+<pre>
+/c/cs223/bin/protect &lt;asno&gt; &lt;file&gt;*
+</pre>
+<p><b><code>unprotect:</code></b> allow (a) file(s) located in the submission directory specified by <code>&lt;asno&gt;</code> to be overwritten.</p>
+<pre>
+/c/cs223/bin/unprotect &lt;asno&gt; &lt;file&gt;*
+</pre>
+<p><b><code>revert:</code></b> return a file submitted to directory <code>&lt;asno&gt;</code> to the version specified by the <code>-r</code> flag. <b>Enabled in CS223, but not necessarily other classes.</b></p>
+<pre>
+/c/cs223/bin/revert &lt;asno&gt; -r&lt;version_no&gt; &lt;file&gt;
+</pre>
+<p><b><code>results:</code></b> view your scores for a particular <code>&lt;asno&gt;</code>. <b>Enabled in CS223, but not necessarily other classes.</b></p>
+<pre>
+/c/cs223/bin/results &lt;asno&gt;
+</pre>
 
 <h2 id="introduction">Introduction</h2>
 <p>This guide is based on the most frequent problems that students encountered last semester while attempting to submit their work. To get your local machine ready for the semester, please see <a href="https://docs.google.com/document/d/1m_IWleu7XgW-JVmxt6zbzJZuSJx0CItdvbou1E1mcyg/edit?usp=sharing">this guide</a>. Note that if you want to use VS Code and SSH - Remote, you won't have to worry about constantly <code>scp</code>-ing your homework files to/from the Zoo and your local machine.</p>
@@ -208,16 +252,87 @@ touch
 <p>and for good measure, two new ones:</p>
 <p><code>less</code> <code>cat</code></p>
 <h2 id="i-can-move-files-around-but-how-do-i-edit-them-within-the-terminal">I can move files around, but how do I edit them within the terminal?</h2>
-<p>It's never a bad time to learn a CLI editor. I recommend Vim. But this is a matter of eternal debate :) The important thing is to test a few out. Vim should come preinstalled in the <code>/usr/bin</code> of your Mac and can thus be called with <code>vim</code> from the terminal. The Zoo machines will of course have many editors available (<code>vim</code>, <code>emacs</code>, <code>nano</code>, etc.). A quick note on Vim: the first time you open a file with this editor you will realize you have no idea how to close the program and freak out. Just remember that ":q" is your friend.</p>
+<p>It's never a bad time to learn a CLI editor. I recommend Vim. But this is a matter of eternal debate :) The important thing is to test a few out. Vim should come preinstalled in the <code>/usr/bin</code> of your Mac and can thus be called with <code>vim</code> from the terminal. The Zoo machines will of course have many editors available (<code>vim</code>, <code>emacs</code>, <code>nano</code>, etc.). A quick note on Vim: the first time you open a file with this editor you will realize you have no idea how to close the program and freak out. Just remember that <code>ESCAPE:q</code> is your friend.</p>
+<h2 id="what-is-RCS">What is RCS?</h2>
+<p>RCS, or <b>R</b>evision <b>C</b>ontrol <b>S</b>ystem, is a protocol that allows multiple users to develop and maintain code simultaneously. Conveniently, it enables users to restore files to their prior states, the main motivation for its use in this class.
+</p>
+<p>Each submission directory contains an <code>RCS</code> subdirectory in which several files reside. These files track changes made to files stored directly inside the submission directory.
+</p>
+<p>For example, let's say we want to include <code>hello_world.c</code> as part of our <code>hw94</code> submission. Right now, the relevant submission directory (<code>/c/cs223/SUBMIT/brunstad.rob.crb84</code>) contains only the RCS subdirectory:
+<pre>
+[crb84@turtle cs223]$ /c/cs223/bin/check 94
+total 4
+drwxrws--- 2 crb84 cs223ta 4096 Dec 14 18:53 RCS
+</pre>
+Now, let's run <code>/c/cs223/bin/submit 94 hello_world.c</code> and <code>check</code> to ensure that the submission went through successfully.
+<pre>
+[crb84@turtle cs223]$ /c/cs223/bin/submit 94 hello_world.c
+Copying hello_world.c
+[crb84@turtle cs223]$ /c/cs223/bin/check 94
+total 8
+-rw-r----- 1 crb84 cs223ta  112 Dec 14 18:54 hello_world.c
+drwxrws--- 2 crb84 cs223ta 4096 Dec 14 18:54 RCS
+</pre>
+Sure enough, we can see that <code>hello_world.c</code> has been copied successfully. If we look closely, we can see that something else has happened, too, as evidenced by a change in the timestamp associated with the <code>RCS</code> directory. Although you don't have the ability to do so, I've navigated to my <code>RCS</code> subdirectory. We can see that a new file <code>hello_world.c,v</code> has been created:
+<pre>
+[crb84@turtle RCS]$ ls
+hello_world.c,v
+</pre>
+Now, let's change <code>hello_world.c</code> a bit and submit again:
+<pre>
+[crb84@turtle cs223]$ /c/cs223/bin/submit 94 hello_world.c 
+Copying hello_world.c
+[crb84@turtle cs223]$ /c/cs223/bin/check 94
+total 8
+-rw-r----- 1 crb84 cs223ta  112 Dec 14 19:25 hello_world.c
+drwxrws--- 2 crb84 cs223ta 4096 Dec 14 19:25 RCS
+</pre>
+We've overwritten the version of <code>hello_world.c</code> that was sitting there before, and <code>RCS/hello_word.c,v</code> has been updated, too, with all the information necessary for us to <code>retrieve</code> its prior state. Let's assume our recent changes were misguided, and we'd like to <code>retrieve</code> the older version of the file. We can see that the timestamp associated with our most recent submission is <code>Dec 14 19:25</code>, so let's use the <code>retrieve</code> command in concert with the <code>-d</code> flag specifying a minute before <code>Dec 14 19:25</code> to get the penultimate version. First, however, because the retrieve command requires that there exists no file with the same name as that being retrieved, let's change the name of our older submission:
+<pre>
+mv hello_world.c hello_world_19:25.c
+</pre>
+Now, we're ready to run the <code>retrieve</code> command.
+<pre>
+[crb84@turtle cs223]$ /c/cs223/bin/retrieve 94 -d"2020/12/14 19:24" hello_world.c
+Copying hello_world.c
+/home/classes/cs223/SUBMIT/94/brunstad.rob.crb84/RCS/hello_world.c,v  -->  hello_world.c
+revision 1.1
+done
+</pre>
+We can see that version 1.1 was copied over to our CWD. With the <code>diff</code> command, we can confirm that we have, in fact, retrieved the older version of our <code>hello_world.c</code>:
+<pre>
+[crb84@turtle cs223]$ diff hello_world.c hello_world_19\:25.c 
+2c2
+< // New version!
+---
+> // Old version
+</pre>
+If we wish to <code>revert</code> our submitted <code>hello_world.c</code> file, we can do so with the <code>revert</code> command, specifying the version to which we'd like to return.
+<pre>
+[crb84@turtle cs223]$ /c/cs223/bin/revert 94 -r1.1 hello_world.c
+/home/classes/cs223/SUBMIT/94/brunstad.rob.crb84/RCS/hello_world.c,v  -->  /home/classes/cs223/SUBMIT/94/brunstad.rob.crb84/hello_world.c
+revision 1.1
+writable /home/classes/cs223/SUBMIT/94/brunstad.rob.crb84/hello_world.c exists; remove it? [ny](n): y
+done
+</pre>
+Note that we had to type <code>y</code> followed by <code>Enter</code> to perform the reversion. Finally, we should check that everything went according to plan.
+<pre>
+[crb84@turtle cs223]$ /c/cs223/bin/check 94
+total 8
+-r--r----- 1 crb84 cs223ta  112 Dec 14 18:54 hello_world.c
+drwxrws--- 2 crb84 cs223ta 4096 Dec 14 19:25 RCS
+</pre>
+Here, we see that the old timestamp has been restored.
+</p>
 
-<h2 id="how-do-i-run-the-autograde-program">How do I run the <code>autograde</code> program?</h2>
+<h2 id="how-do-i-run-the-testit-program">How do I run the <code>testit</code> program?</h2>
 <p>Once the public tests are made available for an assignment, you can test your code against them in two different contexts. If you've already submitted your homework, you can test the exact files that you submitted (which reside in your submission directory) with the following:</p>
 <p><code>/c/cs223/bin/testit &lt;asno&gt; &lt;executable_name&gt;</code></p>
 <p>Note that the name of each assignment's executable will be given in the spec. For instance, for the zeroth assignment you can run the following:</p>
 <p><code>/c/cs223/bin/testit 0 Hello</code></p>
 <p>Additionally, you can test the files that reside in your CWD by running the following:</p>
 <p><code>/c/cs223/hw&lt;asno&gt;/Tests/&lt;executable_name&gt;</code></p>
-<p>Please keep in mind that if you invoke the above command you're running the autograder on the version of your homework that's present in your CWD. If you make a change to those files after submitting and then run the autograder with positive results, the submitted versions of your homework files are outdated and you will need to submit your homework again.</p>
+<p>Please keep in mind that if you invoke the above command you're testing the version of your homework that's present in your CWD. If you make a change to those files after submitting and then run the above positive results, the submitted versions of your homework files are outdated and <b>you will need to submit your homework again</b>.</p>
 <p>You can also run individual tests on the files residing in your CWD with the following command:</p>
 <p><code>/c/cs223/hw&lt;asno&gt;/Tests/t&lt;test_number&gt;</code></p>
 <p>To get a complete list of all the <code>&lt;test_number&gt;</code>s available to you, run <code>ls -al /c/cs223/hw&lt;asno&gt;/Tests/</code>. Note that if a given test is NOT an executable (that is, it does not have a permissions signature ending in <code>x</code>––more info <a href="https://www.linux.com/training-tutorials/understanding-linux-file-permissions/">here</a>), you must use the following syntax to throw it against your code:</p>
@@ -226,11 +341,11 @@ touch
 <p>This class's submit system has RCS (revision control system) enabled, so feel free to submit your work often as you go! For example, if you'd like to get back the version of the file <code>rm_rf_slash.c</code> you submitted sometime just before September 5th, 2020 at 4 pm, you could invoke the <code>retrieve</code> command as follows:</p>
 <p><code>/c/cs223/bin/retrieve &lt;asno&gt; -d"2020/09/05 16:00" rm_rf_slash.c</code></p>
 <p>Note that, in order for this command to be executed correctly, you need to make sure that there does not exist some file named <code>rm_rf_slash.c</code> in your CWD.</p>
-<p>Your resubmissions are automatically tagged with a version number, starting from 1.0 and growing in increments of 0.1. You can also <code>retrieve</code> a particular version of your code using the system-assigned tags:</p>
+<p>Your resubmissions are automatically tagged with a version number, starting from 1.1 and growing in increments of 0.1. You can also <code>retrieve</code> a particular version of your code using the system-assigned tags:</p>
 <p><code>/c/cs223/bin/retrieve &lt;asno&gt; -n1.2 rm_rf_slash.c</code></p>
 <p>It’s always a good idea to test your code with different inputs (and types of inputs) before submitting. Although the bulk of your grade will depend on whether your program produces the correct results when the input meets the specification, your program will be tested on inputs that do not follow the specification. For example, if the input is supposed to contain only integers, it will also be tested on inputs containing floats and strings. Unless otherwise specified, the only requirement in such cases is that your program does not crash or hang and whatever output your program produces will be ignored.</p>
 <h2 id="my-code-is-correct-but-i-dont-pass-any-tests">My code is correct but I don’t pass any tests!</h2>
-<p>Before anything else, check that you have submitted a file and that it is the correct file. Use <code>/c/cs223/bin/check</code> for the existence of a submission. This script basically just runs <code>ls -la</code> on the SUBMIT directory where your code is sent for grading.</p>
+<p>Before anything else, check that you have submitted a file and that it is the correct file. Use <code>/c/cs223/bin/check</code> for the existence of a submission.</p>
 <p>Suppose you submitted <code>rm_rf_slash.c</code> at some point but would like to ensure that it's the most up-to-date version of the file. Instead of deleting and resubmitting, you can invoke the <code>retrieve</code> command:</p>
 <p><code>/c/cs201/bin/retrieve &lt;asno&gt; rm_rf_slash.c</code></p>
 <p>In order for this command to be executed correctly, you need to make sure that there does not exist some file named <code>rm_rf_slash.c</code> in your CWD. Let's assume there is, in fact, another version of that file, so let's rename it:</p>
