@@ -82,9 +82,9 @@ document.write("Last modified: " + document.lastModified)
 </pre>
 
 <h2 id="introduction">Introduction</h2>
-<p>This guide is based on the most frequent problems that students encountered last semester while attempting to submit their work. To get your local machine ready for the semester, please see <a href="https://docs.google.com/document/d/1m_IWleu7XgW-JVmxt6zbzJZuSJx0CItdvbou1E1mcyg/edit?usp=sharing">this guide</a>. Note that if you want to use VS Code and SSH - Remote, you won't have to worry about constantly <code>scp</code>-ing your homework files to/from the Zoo and your local machine.</p>
+<p>This guide is based on the most frequent problems that students encountered last semester while attempting to submit their work. To get your local machine ready for the semester, please see <a href="https://docs.google.com/document/d/1m_IWleu7XgW-JVmxt6zbzJZuSJx0CItdvbou1E1mcyg/edit?usp=sharing">this guide</a>. Note that if you want to use some kind of remote IDE solution, you won't have to worry about constantly <code>scp</code>-ing your homework files to/from the Zoo and your local machine.</p>
 
-<p>If you are following the steps in a particular solution and it’s not working or you don’t understand it, please email a member of the instructional team or come to help hours as soon as possible! The skills that make you fast and efficient on your own computer do not necessarily translate into the command-line world of UNIX. So don’t worry if you find yourself frustrated in the early going – it doesn’t reflect on your ability to learn computer science!</p>
+<p>If you're following the steps given below and it’s not working or you don’t understand it, please email a member of the instructional team or come to help hours as soon as possible! The skills that make you fast and efficient on your own computer do not necessarily translate into the command-line world of UNIX. So don’t worry if you find yourself frustrated in the early going – it doesn’t reflect on your ability to learn computer science!</p>
 <h2 id="note-on-formatting">Note on formatting</h2>
 <p>To set them apart typographically, and to allow code-snippet formatting in Markdown, I will “quote” the following items inside back-ticks.</p>
 <ul>
@@ -100,12 +100,10 @@ document.write("Last modified: " + document.lastModified)
 <p><code>scp &lt;file_you_want_to_send_or_receive&gt; &lt;destination&gt;</code></p>
 <p><em>Zoo –&gt; Me</em>. One-liner for getting some file from your home folder on the Zoo onto your own computer. This also assumes you are currently in the local directory to which you want to transfer the file (i.e.&nbsp;you’re fine with the Zoo file ending up in your CWD, denoted by <code>./</code>).</p>
 <p><code>scp &lt;NetID&gt;@node.zoo.cs.yale.edu:~/&lt;filename&gt; ./</code></p>
-<!-- commented out for spring 2020
 <p>Note that the homeworks will always be available via a browser at:</p>
 <blockquote>
-<p><a href="https://zoo.cs.yale.edu/classes/cs223/Fall_2239/assignments.html" class="uri">https://zoo.cs.yale.edu/classes/cs223/Fall_2239/assignments.html</a></p>
+<p><a href="https://zoo.cs.yale.edu/classes/cs223/f2021/Assignments/index.html" class="uri">https://zoo.cs.yale.edu/classes/cs223/f2021/Assignments/index.html</a></p>
 </blockquote>
--->
 <p><em>Me –&gt; Zoo</em>. Send a file that exists in your CWD from your computer to your userspace on the Zoo. Make sure the target directory ends in a forward slash (<code>/</code>) so that bash interprets <code>cs223</code> as a directory and not a file. Otherwise, you’ll end up sending your file but it will now be named <code>cs223</code>, which is confusing! If the <code>~/cs223</code> directory doesn’t exist, you will see an error message that <code>/cs223/</code> is not a directory. Use <code>mkdir</code> to create the <code>cs223</code> subfolder or just transfer the file to <code>~/</code>.</p>
 <p><code>scp &lt;file_name&gt; &lt;NetID&gt;@node.zoo.cs.yale.edu:~/cs223/</code></p>
 <p>Remotely log in to the Zoo cluster with:</p>
@@ -126,7 +124,7 @@ Are you sure you want to continue connecting (yes/no)?</code></pre>
 <p>To get a sense for the purpose behind the hostname “node.zoo.cs.yale.edu,” run:</p>
 <p><code>whois 128.36.232.19</code></p>
 <h2 id="why-am-I-being-asked-to-use-two-factor-authentication-to-log-in-to-the-zoo">Why am I being asked to use two-factor authentication to log in to the Zoo?</h2>
-<p>Over the summer, Yale enabled two-factor authentication for Zoo access. The idea is to increase security by verifying your identity over another channel because a password alone is not very secure (especially for ssh access).</p>
+<p>Yale recently enabled two-factor authentication for Zoo access. The idea is to increase security by verifying your identity over another channel because a password alone is not very secure (especially for ssh access).</p>
 <p>After entering your password, you will be prompted with three authentication options. Select one by typing in its corresponding number and hitting <code>enter</code>. Then, you'll need to complete the verification request using information forwarded to your mobile device. Once finished, you should be on the Zoo!</p>
 <p>If you use the Yale VPN, you won't have to use 2FA each time you login. Download links and instructions for installation can be found <a href="https://software.yale.edu/software/cisco-vpn-anyconnect"> here</a>.</p>
 <h2 id="how-can-i-transfer-files-and-log-in-remotely-on-a-windows-computer">How can I transfer files and log in remotely on a Windows computer?</h2>
@@ -148,8 +146,7 @@ Are you sure you want to continue connecting (yes/no)?</code></pre>
 <p>Update to Windows 10 now! These earlier versions aren't supported anymore and will just cause trouble for you.</p>
 
 <h2 id="how-do-i-access-the-zoo">How do I access the Zoo?</h2>
-For Fall 2020 the machines in the Zoo may only be accessed remotely. The machines are located on the 3rd floor of Arthur K Watson Hall (AKW), but due to concerns about disease transmission all of the keyboards and mice have been removed.
-<p>If you enrolled in a computer science course, you always use your NetID and password to log in to a Zoo node.</p>
+<p>The machines are located on the 3rd floor of Arthur K Watson Hall (AKW) and in HLH 17 Room 111. Keep in mind that you can always walk up to them and log in using your NetID and password!</p>
 
 <h2 id="where-should-i-keep-my-files-on-the-zoo">Where should I keep my files on the Zoo?</h2>
 <p>The Zoo is a cluster of computers running the Linux operating system and sharing a common filesystem. Your userspace exists at <code>/home/accts/&lt;NetID&gt;</code>. This directory (in my case <code>/home/accts/swk2</code>) is called the home directory and it has a shortcut or alias which is the tilde character, <code>~</code>. This is where you will find the <code>cs223</code> directory that was created when you registered. Putting these two facts together, we can see that <code>~/cs223</code> is a logical place to keep your homework files.</p>
@@ -201,7 +198,7 @@ drwx------ 55 swk2 swk2 4096 Jan 10 16:43 ..</code></pre>
 <p>You should see a message saying that your submissions were “copied” if you have done everything right and “not copied” if something went wrong. If you do not see any output, assume that the command failed. The syntax is exactly the same for the other submit scripts, which you can use to unsubmit your work or protect it or verify that you have indeed submitted file(s).</p>
 <p>This guide is NOT the manual for the ZSS; rather, it attempts to demystify why the submit programs need to be invoked in the way they do. Again, you will learn so much more (and be able to check your work) if you commit to not copying-and-pasting the commands from the existing guide.</p>
 <h2 id="how-can-i-use-the-zoo-from-my-own-laptop">How can I use the Zoo from my own laptop?</h2>
-<p>You need to learn how to send files to the Zoo from a remote machine (e.g.&nbsp;your laptop) over the internet. Remember that your code must first make it to your Zoo account before submission! <code>/c/cs223/bin/submit</code> only exists on the Zoo cluster, to refer to it on your own computer makes no sense.</p>
+<p>You need to learn how to send files to the Zoo from a remote machine (e.g.&nbsp;your laptop) over the internet. Remember that your code must first make it to your Zoo account before submission! <code>/c/cs223/bin/submit</code> only exists on the Zoo cluster, and to refer to it on your own computer makes no sense.</p>
 
 <p>Good ways of transferring files to the Zoo</p>
 <ul>
@@ -364,7 +361,7 @@ Here, we see that the old timestamp has been restored.
 
 <h2 id="best-practices-for-submitting">What are best practices for submitting homework?</h2>
 
-<p><b>Use the <code>protect</code> command.</b> Just do it. It'll save you a lot of headache in the event that you accidentally <code>submit</code> code to the wrong submission directory. If, for example, you <code>submit</code> your <code>makefile</code> for Exercise 4 to the submission directory for Exercise 3, your prior <code>makefile</code> will be overwritten without any fanfare (as RCS is enabled). Then, when we grade Exercise 4, you will likely fail all the tests.</p>
+<p><b>Use the <code>protect</code> command.</b> Just do it. It'll save you a lot of headache in the event that you accidentally <code>submit</code> code to the wrong submission directory. If, for example, you <code>submit</code> your <code>makefile</code> for Exercise 4 to the submission directory for Exercise 3, your prior <code>makefile</code> will be overwritten without any fanfare (as RCS is enabled). Then, when we grade Exercise 4, you will likely fail all tests. Additionally, if we have not yet graded Exercise 3, you will likely fail all of those tests, as well.</p>
 <p>Using <code>protect</code> prevents the overwrite and alerts you to the fact that you previously protected the file that you're attempting to overwrite:</p>
 
 <pre><code>[crb84@macaw cs223]$ /c/cs223/bin/submit 4 codes.code 
